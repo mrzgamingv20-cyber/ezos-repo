@@ -1,0 +1,16 @@
+{
+  "curl": "Command-line tool for transferring data with URLs",
+  "dig": "DNS lookup utility",
+  "htop": "Interactive process viewer",
+  "iperf2": "Network bandwidth measurement tool (v2)",
+  "iperf3": "Network bandwidth measurement tool (v3)",
+  "jq": "Command-line JSON processor",
+  "rsync": "Fast file copying/sync tool",
+  "scp": "Secure file copy over SSH",
+  "sftp": "Secure file transfer over SSH",
+  "ssh": "Secure shell client",
+  "ssh-keygen": "SSH key generator",
+  "ssh-keyscan": "SSH public key scanner",
+  "tcpdump": "Network packet analyzer",
+  "hello": "Test package"
+}
