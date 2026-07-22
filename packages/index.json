@@ -13,4 +13,5 @@
   "ssh-keyscan": "SSH public key scanner",
   "tcpdump": "Network packet analyzer",
   "hello": "Test package"
+  "ezupdate": "Cek update image EZOS terbaru dari GHCR"
 }
