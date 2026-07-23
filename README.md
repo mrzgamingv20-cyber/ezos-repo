@@ -1,3 +1,9 @@
+
+
+![EZOS Logo](./assets/ezos.png)
+
+
+
 # EZOS
 
 **EZOS** adalah distro Linux mandiri (standalone) yang dibangun dari nol untuk dijalankan di Android lewat Termux + `proot-distro`. Berbasis Debian (`bookworm-slim`), EZOS dilengkapi branding sendiri, package manager custom (`ezpkg`), dan beberapa tools eksklusif yang gak ada di distro lain.
