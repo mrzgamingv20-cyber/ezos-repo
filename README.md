@@ -13,12 +13,11 @@
 
 Butuh Termux dengan `proot-distro` terinstall:
 
-\`\`\`bash
-pkg update -y
+'pkg update -y
 pkg install proot-distro -y
 proot-distro install ghcr.io/mrzgamingv20-cyber/ezos:latest
-proot-distro login ezos
-\`\`\`
+proot-distro login ezos'
+
 
 Setelah masuk, semua tools EZOS termasuk \`ezpkg\` udah siap dipakai:
 \`\`\`bash
@@ -34,7 +33,9 @@ Paket-paket tambahan buat \`ezpkg\` disimpan di folder [\`packages/\`](./package
 
 - **idk** ([@mrzgamingv20-cyber](https://github.com/mrzgamingv20-cyber)) — pembuat & pengembang EZOS
 - Dibangun dengan bantuan Claude (Anthropic) sebagai asisten teknis selama development
+- aku 10% (cuma bikin logo doang :v)
+- claude 90% 
 
 ## Lisensi
 
-Proyek personal/iseng — bebas dipakai, dimodifikasi, atau dijadiin basis buat proyek lain.
+Proyek personal/iseng — bebas dipakai, dimodifikasi, atau dijadiin basis buat proyek lain itu pun jika ada yg mau :v
