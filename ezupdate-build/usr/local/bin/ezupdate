@@ -1,0 +1,27 @@
+#!/bin/sh
+REPO="mrzgamingv20-cyber/ezos"
+LOCAL=$(cat /etc/ezos-build-id 2>/dev/null)
+
+TOKEN=$(wget -qO- "https://ghcr.io/token?scope=repository:$REPO:pull" 2>/dev/null | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
+
+if [ -z "$TOKEN" ]; then
+  echo "⚠️  Gagal ambil token (cek koneksi internet)"
+  exit 1
+fi
+
+REMOTE=$(wget -S -O /dev/null --header="Authorization: Bearer $TOKEN" \
+  --header="Accept: application/vnd.docker.distribution.manifest.v2+json,application/vnd.docker.distribution.manifest.list.v2+json,application/vnd.oci.image.manifest.v1+json,application/vnd.oci.image.index.v1+json" \
+  "https://ghcr.io/v2/$REPO/manifests/latest" 2>&1 | grep -i "docker-content-digest" | awk '{print $2}' | tr -d '\r')
+
+if [ -z "$REMOTE" ]; then
+  echo "⚠️  Gagal cek update (GHCR nggak bisa diakses)"
+elif [ -z "$LOCAL" ]; then
+  echo "ℹ️  Belum ada baseline versi lokal (rebuild image dulu biar tercatat)"
+  echo "    Versi terbaru di GHCR: $REMOTE"
+elif [ "$LOCAL" != "$REMOTE" ]; then
+  echo "🔔 Update tersedia buat EZOS!"
+  echo "    Lokal : $LOCAL"
+  echo "    GHCR  : $REMOTE"
+else
+  echo "✅ EZOS udah versi terbaru ($LOCAL)"
+fi

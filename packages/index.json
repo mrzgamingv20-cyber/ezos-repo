@@ -13,5 +13,6 @@
   "ssh-keyscan": "SSH public key scanner",
   "tcpdump": "Network packet analyzer",
   "hello": "Test package",
-  "ezupdate": "Cek update image EZOS terbaru dari GHCR"
+  "ezupdate": "Cek update image EZOS terbaru dari GHCR",
+  "ezinfo": "Show EZOS system info and credits (EZOS exclusive)"
 }
