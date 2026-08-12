@@ -1,4 +1,4 @@
-![EZOS Logo](./assets/ezos.png)
+![EZOS Logo](./assets/1786542659786.png)
 
 🐧 EZOS
 
