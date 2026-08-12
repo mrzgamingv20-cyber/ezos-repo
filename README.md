@@ -1,47 +1,75 @@
+"EZOS Logo" (./assets/ezos.png)
 
+🐧 EZOS
 
-![EZOS Logo](./assets/ezos.png)
+EZOS is a standalone Linux distribution built from scratch to run on Android through Termux + "proot-distro".
 
+Built on top of Debian "bookworm-slim", EZOS comes with its own branding, a custom package manager ("ezpkg"), and a collection of exclusive tools designed specifically for EZOS. 🚀
 
+✨ Features
 
-# EZOS
+- 🐧 Base: Debian "bookworm-slim"
+- 📦 Custom Package Manager: "ezpkg"
+- 🛠️ Exclusive Tools: "ezinfo", "ezupdate", and more coming soon
+- 🎨 Full Branding: Custom ASCII logo, MOTD, and "/etc/os-release"
+- 📦 OCI Image: Distributed through GitHub Container Registry (GHCR)
+- 📱 Android Ready: Designed to run directly on Android using Termux
 
-**EZOS** adalah distro Linux mandiri (standalone) yang dibangun dari nol untuk dijalankan di Android lewat Termux + `proot-distro`. Berbasis Debian (`bookworm-slim`), EZOS dilengkapi branding sendiri, package manager custom (`ezpkg`), dan beberapa tools eksklusif yang gak ada di distro lain.
+📥 Installation
 
-## Fitur
-- Base: Debian bookworm-slim
-- Package manager sendiri: `ezpkg` (install/remove/search/update/upgrade/list)
-- Tools eksklusif: `ezinfo`, `ezupdate`, dan lainnya menyusul
-- Branding penuh: logo ASCII custom, MOTD, `/etc/os-release`
-- Didistribusikan sebagai OCI image lewat GitHub Container Registry (GHCR)
+Requirements
 
-## Cara Install
+Make sure you have Termux with "proot-distro" installed.
 
-Butuh Termux dengan `proot-distro` terinstall:
-
-'pkg update -y
+🚀 Install EZOS
+```text
+pkg update -y
 pkg install proot-distro -y
 proot-distro install ghcr.io/mrzgamingv20-cyber/ezos:latest
-proot-distro login ezos'
+```
+🔑 Login to EZOS
+```text
+proot-distro login ezos
+```
+That's it! 🎉 You are now inside EZOS.
 
+📦 Package Repository
 
-Setelah masuk, semua tools EZOS termasuk \`ezpkg\` udah siap dipakai:
-\`\`\`bash
-ezpkg install htop
-ezinfo
-\`\`\`
+Additional packages for "ezpkg" are stored in the ""packages/"" (./packages) directory.
 
-## Repo Paket
+The available packages are registered in ""index.json"" (./packages/index.json).
 
-Paket-paket tambahan buat \`ezpkg\` disimpan di folder [\`packages/\`](./packages) repo ini, terdaftar di [\`index.json\`](./packages/index.json).
+packages/
+├── ...
+└── index.json
 
-## Kontributor
+👨‍💻 Contributors
 
-- **idk** ([@mrzgamingv20-cyber](https://github.com/mrzgamingv20-cyber)) — pembuat & pengembang EZOS
-- Dibangun dengan bantuan Claude (Anthropic) sebagai asisten teknis selama development
-- aku 10% (cuma bikin logo doang :v)
-- claude 90% 
+- idk ("@mrzgamingv20-cyber" (https://github.com/mrzgamingv20-cyber))
+  Creator & developer of EZOS 🧑‍💻
 
-## Lisensi
+- Claude (Anthropic) 🤖
+  Technical assistant during development
 
-Proyek personal/iseng — bebas dipakai, dimodifikasi, atau dijadiin basis buat proyek lain itu pun jika ada yg mau :v
+- Me: 10% 😎
+  Mostly responsible for making the logo :v
+
+- Claude: 90% 🗿
+
+📜 License
+
+EZOS is a personal/fun project.
+
+Feel free to:
+
+- 🔧 Use it
+- ✏️ Modify it
+- 🚀 Build your own project on top of it
+- 💡 Experiment with it
+
+Do whatever you want with it — if anyone actually wants to use it :v
+
+---
+
+<p align="center">
+  Made with 🐧, ☕, and a questionable amount of code.
