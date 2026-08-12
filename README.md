@@ -1,4 +1,4 @@
-"EZOS Logo" (./assets/ezos.png)
+![EZOS Logo](./assets/ezos.png)
 
 🐧 EZOS
 
