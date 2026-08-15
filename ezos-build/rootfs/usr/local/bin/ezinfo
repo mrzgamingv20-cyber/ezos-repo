@@ -1,0 +1,8 @@
+#!/bin/sh
+cat /etc/motd
+echo ""
+echo "EZOS - Standalone Linux distro by idk"
+echo "Base: Debian (bookworm-slim)"
+echo "Package manager: ezpkg"
+echo "Repo: https://github.com/mrzgamingv20-cyber/ezos-repo"
+echo "Image: ghcr.io/mrzgamingv20-cyber/ezos:latest"

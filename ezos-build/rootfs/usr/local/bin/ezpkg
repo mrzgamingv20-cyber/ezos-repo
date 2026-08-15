@@ -1,0 +1,100 @@
+#!/bin/sh
+
+REPO="https://raw.githubusercontent.com/mrzgamingv20-cyber/ezos-repo/main"
+DB="/var/lib/ezpkg/installed.txt"
+CACHE="/var/cache/ezpkg"
+
+mkdir -p "$(dirname "$DB")" "$CACHE"
+
+install_pkg() {
+    pkg="$1"
+    url="$REPO/packages/$pkg.tar.gz"
+    file="$CACHE/$pkg.tar.gz"
+
+    if wget -q --spider "$url"; then
+        echo "Installing $pkg from EZOS repo..."
+
+        wget -q "$url" -O "$file" || {
+            echo "Failed to download $pkg."
+            return 1
+        }
+
+        tar -tzf "$file" >/dev/null 2>&1 || {
+            echo "Invalid package: $pkg"
+            rm -f "$file"
+            return 1
+        }
+
+        tar -xzf "$file" -C / || {
+            echo "Failed to extract $pkg."
+            return 1
+        }
+
+        grep -qxF "$pkg" "$DB" 2>/dev/null || echo "$pkg" >> "$DB"
+
+        echo "$pkg installed."
+    else
+        echo "$pkg not found in EZOS repo."
+        echo "Trying Debian repository..."
+
+        apt install -y "$pkg"
+    fi
+}
+
+case "$1" in
+    install)
+        [ -z "$2" ] && {
+            echo "Usage: ezpkg install <package>"
+            exit 1
+        }
+        install_pkg "$2"
+        ;;
+
+    remove)
+        [ -z "$2" ] && {
+            echo "Usage: ezpkg remove <package>"
+            exit 1
+        }
+
+        if grep -qxF "$2" "$DB" 2>/dev/null; then
+            echo "WARNING: EZOS packages cannot currently be safely removed."
+            echo "Package remains installed."
+            exit 1
+        else
+            apt remove -y "$2"
+        fi
+        ;;
+
+    search)
+        [ -z "$2" ] && {
+            echo "Usage: ezpkg search <package>"
+            exit 1
+        }
+        apt-cache search "$2"
+        ;;
+
+    update)
+        apt update
+        ;;
+
+    upgrade)
+        apt update && apt upgrade -y
+        ;;
+
+    list)
+        echo "--- EZOS packages ---"
+        cat "$DB" 2>/dev/null || echo "(none)"
+        ;;
+
+    *)
+        echo "EZPKG - EZOS Package Manager"
+        echo
+        echo "Usage:"
+        echo "  ezpkg install <package>"
+        echo "  ezpkg remove <package>"
+        echo "  ezpkg search <package>"
+        echo "  ezpkg update"
+        echo "  ezpkg upgrade"
+        echo "  ezpkg list"
+        ;;
+esac

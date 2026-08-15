@@ -1,0 +1,119 @@
+{
+  "image_ref": "ghcr.io/mrzgamingv20-cyber/ezos:latest",
+  "arch": "aarch64",
+  "manifest": {
+    "config": {
+      "digest": "sha256:f4eb4288db5601e298fc17f38259959b8c141479dbd93405fe8f0ea77f33aff3",
+      "mediaType": "application/vnd.oci.image.config.v1+json",
+      "size": 3088
+    },
+    "layers": [
+      {
+        "digest": "sha256:53bb9e501f1803aca595be8d902a62cea6bf4d996ce6f7dfe16c1c97be343e6c",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 28117255
+      },
+      {
+        "digest": "sha256:a2eaa7f9287b349ca04f916c36669e2f9e3a508d9da4673d7edaf554da79ae2f",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 305
+      },
+      {
+        "digest": "sha256:eebb475343ed5337f7cc049c8aee0f6cae8309ba748db189d90bb15c882d6298",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 21255695
+      },
+      {
+        "digest": "sha256:469799982be68b2cca4c6db4dce25d78344cbf87f28083d313068882f620ba39",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 559
+      },
+      {
+        "digest": "sha256:e52cb2652902db976582eb0f31196076c092e4475c6883552fd7e4278d63e5d5",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 494
+      },
+      {
+        "digest": "sha256:7130fb30c5f73fc36fe8de2849306ab5ede5bb9b6b1de21776caa8969cffe23e",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 130
+      },
+      {
+        "digest": "sha256:74ab264d5d7326cb9ec5e59518d617a4772c50c299de69dfea3969d1fed4809d",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 334
+      },
+      {
+        "digest": "sha256:03dd37d8257d51fbb29107cf80c5398c016c4af1f0a2dade8fbe1b86ad9d6333",
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "size": 515
+      }
+    ],
+    "mediaType": "application/vnd.oci.image.manifest.v1+json",
+    "schemaVersion": 2,
+    "_ct": "application/vnd.oci.image.manifest.v1+json"
+  },
+  "image_config": {
+    "architecture": "arm64",
+    "config": {
+      "Cmd": [
+        "bash"
+      ],
+      "Entrypoint": [],
+      "Env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ]
+    },
+    "created": "2026-07-13T00:00:00Z",
+    "history": [
+      {
+        "comment": "debuerreotype 0.17",
+        "created": "2026-07-13T00:00:00Z",
+        "created_by": "# debian.sh --arch 'arm64' out/ 'bookworm' '@1783900800'"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "COPY motd.txt /etc/motd"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "RUN echo 'NAME=\"EZOS\"' > /etc/os-release && echo 'ID=ezos' >> /etc/os-release && echo 'VERSION_ID=\"3.0\"' >> /etc/os-release && echo 'PRETTY_NAME=\"EZOS 3.0 (Debian-based)\"' >> /etc/os-release && echo 'cat /etc/motd' >> /etc/profile && apt update && apt install -y wget curl nano"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "RUN mkdir -p /usr/local/bin && printf '#!/bin/sh\\nREPO=\"https://raw.githubusercontent.com/mrzgamingv20-cyber/ezos-repo/main\"\\nDB=\"/var/lib/ezpkg/installed.txt\"\\nmkdir -p /var/lib/ezpkg\\ncase \"$1\" in\\n  install)\\n    pkg=\"$2\"\\n    if wget -q --spider \"$REPO/packages/$pkg.tar.gz\"; then\\n      wget -q \"$REPO/packages/$pkg.tar.gz\" -O \"/tmp/$pkg.tar.gz\"\\n      tar -xzf \"/tmp/$pkg.tar.gz\" -C /\\n      echo \"$pkg\" >> \"$DB\"\\n      echo \"$pkg installed (from EZOS repo).\"\\n    else\\n      apt install -y \"$pkg\" && echo \"$pkg installed (from Debian repo).\"\\n    fi\\n    ;;\\n  remove)\\n    apt remove -y \"$2\" 2>/dev/null\\n    sed -i \"/^$2$/d\" \"$DB\" 2>/dev/null\\n    echo \"$2 removed.\"\\n    ;;\\n  search)\\n    apt-cache search \"$2\"\\n    ;;\\n  update)\\n    apt update\\n    ;;\\n  upgrade)\\n    apt upgrade -y\\n    ;;\\n  list)\\n    echo \"--- EZOS repo packages ---\"\\n    cat \"$DB\" 2>/dev/null || echo \"(none)\"\\n    ;;\\n  *)\\n    echo \"Usage: ezpkg [install|remove|search|update|upgrade|list] <package>\"\\n    ;;\\nesac\\n' > /usr/local/bin/ezpkg && chmod +x /usr/local/bin/ezpkg"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "RUN echo \"alias fastfetch='fastfetch --logo /etc/motd --logo-type file'\" >> /root/.bashrc"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "RUN mkdir -p /root/.config/fastfetch"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "COPY fastfetch-config/config.jsonc /root/.config/fastfetch/config.jsonc"
+      },
+      {
+        "created": "1970-01-01T00:00:00Z",
+        "created_by": "RUN echo \"alias fastfetch='fastfetch -c /root/.config/fastfetch/config.jsonc'\" >> /root/.bashrc"
+      }
+    ],
+    "os": "linux",
+    "rootfs": {
+      "diff_ids": [
+        "sha256:12cdff3b039e28c684ffd2097ff5a66df274a8500966a1431038b05f50bcf096",
+        "sha256:6796653f42a540326e8951a2efe0e770c445d64234cb6d31c47c7680f01e8c74",
+        "sha256:68a55647e0a9d79b3f8ff17c931ff9e839aa333c014996b2c113bdbc6c335814",
+        "sha256:6a9cc081475c7e50081068f8966f5ac5a720ab2437cf3ad139ea47e62e5e5756",
+        "sha256:f8b66d0b4db5422d39e95d8622ea35f5aa15adc572e2dfe8a5037c8b0ad8b58b",
+        "sha256:5d63aa859257aa38a1a8fea0e35dce867114563f4d6e73d2f7854412b1d2bac6",
+        "sha256:e622a93c5a4aff048fde58ed7261b5e5d4b1c44f1aaf04dd075811220770db99",
+        "sha256:40c7b75b9cd373d1feefbf570beb4921165415b4d7a59b07915da640d7a88ce7"
+      ],
+      "type": "layers"
+    },
+    "variant": "v8"
+  }
+}

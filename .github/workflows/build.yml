@@ -1,0 +1,53 @@
+name: Build EZOS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare rootfs
+        run: |
+          mkdir image-rootfs
+          cp -a ezos-build/ezos/rootfs/. image-rootfs/
+
+      - name: Create Dockerfile
+        run: |
+          cat > Dockerfile <<'EOF'
+          FROM scratch
+
+          COPY image-rootfs/ /
+
+          ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+          CMD ["bash"]
+          EOF
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/arm64
+          tags: |
+            ghcr.io/mrzgamingv20-cyber/ezos:latest
+            ghcr.io/mrzgamingv20-cyber/ezos:3.0

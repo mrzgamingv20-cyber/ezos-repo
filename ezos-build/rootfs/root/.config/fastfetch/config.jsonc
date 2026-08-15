@@ -1,0 +1,19 @@
+{
+  "logo": {
+    "type": "file",
+    "source": "/etc/motd"
+  },
+  "modules": [
+    {
+      "type": "custom",
+      "format": "OS: EZOS 3.0 (Debian-based) aarch64"
+    },
+    "host",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "memory",
+    "disk"
+  ]
+}

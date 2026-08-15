@@ -1,0 +1,38 @@
+#!/bin/sh
+REPO="https://raw.githubusercontent.com/mrzgamingv20-cyber/ezos-repo/main"
+DB="/var/lib/ezpkg/installed.txt"
+mkdir -p /var/lib/ezpkg
+case "$1" in
+  install)
+    pkg="$2"
+    if wget -q --spider "$REPO/packages/$pkg.tar.gz"; then
+      wget -q "$REPO/packages/$pkg.tar.gz" -O "/tmp/$pkg.tar.gz"
+      tar -xzf "/tmp/$pkg.tar.gz" -C /
+      echo "$pkg" >> "$DB"
+      echo "$pkg installed (from EZOS repo)."
+    else
+      apt install -y "$pkg" && echo "$pkg installed (from Debian repo)."
+    fi
+    ;;
+  remove)
+    apt remove -y "$2" 2>/dev/null
+    sed -i "/^$2$/d" "$DB" 2>/dev/null
+    echo "$2 removed."
+    ;;
+  search)
+    apt-cache search "$2"
+    ;;
+  update)
+    apt update
+    ;;
+  upgrade)
+    apt upgrade -y
+    ;;
+  list)
+    echo "--- EZOS repo packages ---"
+    cat "$DB" 2>/dev/null || echo "(none)"
+    ;;
+  *)
+    echo "Usage: ezpkg [install|remove|search|update|upgrade|list] <package>"
+    ;;
+esac
