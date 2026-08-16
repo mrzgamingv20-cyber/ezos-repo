@@ -1,4 +1,4 @@
-![EZOS Logo](./assets/Tak berjudul46_20260816070624.png)
+![EZOS Logo](./assets/logoezos.jpg)
 
 🐧 EZOS
 
