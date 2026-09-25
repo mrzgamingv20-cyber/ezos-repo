@@ -1,0 +1,21 @@
+# Build artifacts
+ezos-build/rootfs/
+ezos-build/manifest.json
+
+# Checksums (generated)
+CHECKSUMS.sha256
+packages/CHECKSUMS.sha256
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temp
+tmp_ezupdate/
