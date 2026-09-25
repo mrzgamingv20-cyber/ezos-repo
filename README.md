@@ -2,74 +2,67 @@
 
 🐧 EZOS
 
-EZOS is a standalone Linux distribution built from scratch to run on Android through Termux + "proot-distro".
+EZOS is a standalone Linux distribution built from scratch to run on Android through Termux + `proot-distro`.
 
-Built on top of Debian "bookworm-slim", EZOS comes with its own branding, a custom package manager ("ezpkg"), and a collection of exclusive tools designed specifically for EZOS. 🚀
+Built on top of Debian "bookworm-slim", EZOS comes with its own branding, a custom package manager (`ezpkg`), and a collection of exclusive tools designed specifically for EZOS.
 
 ✨ Features
 
-- 🐧 Base: Debian "bookworm-slim"
-- 📦 Custom Package Manager: "ezpkg"
-- 🛠️ Exclusive Tools: "ezinfo", "ezupdate", and more coming soon
-- 🎨 Full Branding: Custom ASCII logo, MOTD, and "/etc/os-release"
-- 📦 OCI Image: Distributed through GitHub Container Registry (GHCR)
-- 📱 Android Ready: Designed to run directly on Android using Termux
+- 🐧 **Base**: Debian bookworm-slim (aarch64)
+- 📦 **Package Manager**: `ezpkg` — EZOS repo packages or Debian apt fallback
+- 🛠️ **Tools**: `ezinfo`, `ezupdate`, `fastfetch`
+- 🎨 **Branding**: Custom ASCII logo, MOTD, `/etc/os-release`, fastfetch config
+- 📦 **OCI Image**: Distributed via [GHCR](https://ghcr.io/mrzgamingv20-cyber/ezos:latest)
+- 📱 **Android Ready**: Runs directly on Android via Termux
 
 📥 Installation
 
-Requirements
-
-Make sure you have Termux with "proot-distro" installed.
-
-🚀 Install EZOS
-```text
+```bash
 pkg update -y
 pkg install proot-distro -y
 proot-distro install ghcr.io/mrzgamingv20-cyber/ezos:latest
-```
-🔑 Login to EZOS
-```text
 proot-distro login ezos
 ```
-That's it! 🎉 You are now inside EZOS.
 
-📦 Package Repository
+📦 Package Manager
 
-Additional packages for "ezpkg" are stored in the ""packages/"" (./packages) directory.
+EZOS uses `ezpkg` as its custom package manager. It first checks the EZOS repository, then falls back to Debian apt.
 
-The available packages are registered in ""index.json"" (./packages/index.json).
+```bash
+ezpkg install <package>     # Install a package
+ezpkg remove <package>      # Remove a package
+ezpkg search <query>        # Search Debian repos
+ezpkg update                # Update apt lists
+ezpkg upgrade               # Upgrade all packages
+ezpkg list                  # List installed packages
+```
 
-packages/
-├── ...
-└── index.json
+Available EZOS packages are listed in `packages/index.json`.
+
+Building packages from .deb:
+
+```bash
+cd packages
+bash build-packages.sh wget nano git    # Build specific packages
+bash build-packages.sh                  # Build all packages
+```
+
+🔧 Development
+
+Build the Docker image locally:
+
+```bash
+docker build -f ezos-build/Dockerfile -t ezos:local .
+```
 
 👨‍💻 Contributors
 
-- idk ("@mrzgamingv20-cyber" (https://github.com/mrzgamingv20-cyber))
-  Creator & developer of EZOS 🧑‍💻
-
-- Claude (Anthropic) 🤖
-  Technical assistant during development
-
-- Me: 10% 😎
-  Mostly responsible for making the logo :v
-
-- Claude: 90% 🗿
+- [@mrzgamingv20-cyber](https://github.com/mrzgamingv20-cyber) — Creator & developer
 
 📜 License
 
-EZOS is a personal/fun project.
-
-Feel free to:
-
-- 🔧 Use it
-- ✏️ Modify it
-- 🚀 Build your own project on top of it
-- 💡 Experiment with it
-
-Do whatever you want with it — if anyone actually wants to use it :v
+MIT License — see [LICENSE](LICENSE).
 
 ---
 
-<p align="center">
-  Made with 🐧, ☕, and a questionable amount of code.
+<p align="center">Made with 🐧, ☕, and a questionable amount of code.</p>

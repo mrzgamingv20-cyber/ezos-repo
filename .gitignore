@@ -17,5 +17,10 @@ Thumbs.db
 # Logs
 *.log
 
-# Temp
+# Temp / build
 tmp_ezupdate/
+packages/.debs/
+packages/*.deb
+packages/CHECKSUMS.sha256
+packages/*.tar.gz.bak
+*.tar.gz.bak
