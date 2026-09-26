@@ -24,3 +24,4 @@ packages/*.deb
 packages/CHECKSUMS.sha256
 packages/*.tar.gz.bak
 *.tar.gz.bak
+packages/packages-list.gz

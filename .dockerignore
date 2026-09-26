@@ -1,0 +1,35 @@
+# Build artifacts
+ezos-build/rootfs/
+ezos-build/manifest.json
+
+# Checksums
+CHECKSUMS.sha256
+packages/CHECKSUMS.sha256
+
+# Package source files (keep only .tar.gz in Docker context)
+packages/.debs/
+packages/*.deb
+packages/*.tar.gz.bak
+packages/packages-list.gz
+packages/build-packages.sh
+packages/get-debs.sh
+packages/download-packages.sh
+packages/build-new-packages.sh
+packages/download.sh
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+tmp_ezupdate/
+
+# Scripts at root
+generate-checksums.sh
+install_ezos.sh
+packages/index.json
