@@ -5,12 +5,34 @@ MAIN_REPO="https://raw.githubusercontent.com/mrzgamingv20-cyber/ezos-repo/main"
 REPO_FILE="/var/lib/ezpkg/repos.list"
 DB="/var/lib/ezpkg/installed.txt"
 CACHE="/var/cache/ezpkg"
-RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; CYAN='\033[0;36m'; MAGENTA='\033[0;35m'; NC='\033[0m'
 
 mkdir -p "$(dirname "$DB")" "$CACHE"
 [ -f "$REPO_FILE" ] || touch "$REPO_FILE"
 
 banner() { echo -e "${CYAN}━━━ EZPKG ━━━${NC}"; }
+
+get_repo_names() {
+    echo "$MAIN_REPO"
+    [ -s "$REPO_FILE" ] && cat "$REPO_FILE"
+}
+
+repo_desc() {
+    url="$1"
+    pkg="$2"
+    index=$(wget -qO- "${url}/packages/index.json" 2>/dev/null || true)
+    if [ -n "$index" ]; then
+        desc=$(echo "$index" | grep -A1 "\"${pkg}\":" | grep '"' | sed 's/.*: *"//;s/"$//' | head -1)
+        [ -n "$desc" ] && echo "$desc" && return 0
+    fi
+    echo "No description"
+    return 1
+}
+
+repo_list_pkgs() {
+    url="$1"
+    wget -qO- "${url}/packages/" 2>/dev/null | grep -oE 'href="[^"]+\.tar\.gz"' | sed 's/href="//;s/"//;s/.tar.gz//' || true
+}
 
 repo_add() {
     url="$1"
@@ -24,20 +46,14 @@ repo_add() {
 
 repo_auto_install() {
     url="$1"
-    pkg_dir="${url}/packages"
-    pkgs=$(wget -qO- "${pkg_dir}" 2>/dev/null | grep -oP 'href="[^"]+\.tar\.gz"' | sed 's/href="//;s/"//;s/.tar.gz//' || true)
-    if [ -z "$pkgs" ]; then
-        index=$(wget -qO- "${url}/packages/index.json" 2>/dev/null || true)
-        if [ -n "$index" ]; then
-            pkgs=$(echo "$index" | grep -oP '"\K[^"]+(?=":)')
-        fi
-    fi
+    pkgs=$(repo_list_pkgs "$url")
     if [ -z "$pkgs" ]; then
         echo -e "${RED}[✗]${NC} Tidak ada package ditemukan di repo."
         exit 1
     fi
     for pkg in $pkgs; do
-        echo -e "${BLUE}[→]${NC} Ditemukan package: ${GREEN}$pkg${NC}"
+        desc=$(repo_desc "$url" "$pkg" 2>/dev/null || echo "")
+        echo -e "${BLUE}[→]${NC} ${GREEN}$pkg${NC} — $desc"
         echo -ne "${YELLOW}[?]${NC} Install $pkg dari $url? [Y/n]: "
         read -r answer
         case "$answer" in
@@ -72,23 +88,71 @@ repo_remove() {
 
 repo_list() {
     echo -e "${CYAN}── Repo yang aktif ──${NC}"
-    echo -e "  ${BLUE}[main]${NC} $MAIN_REPO"
+    echo -e "  ${BLUE}[main]${NC} $MAIN_REPO ($(repo_list_pkgs "$MAIN_REPO" | wc -w) packages)"
     if [ -s "$REPO_FILE" ]; then
         i=1; while IFS= read -r url; do
-            echo -e "  ${BLUE}[extra-$i]${NC} $url"; i=$((i+1))
+            count=$(repo_list_pkgs "$url" | wc -w)
+            echo -e "  ${BLUE}[extra-$i]${NC} $url ($count packages)"
+            i=$((i+1))
         done < "$REPO_FILE"
     else
         echo -e "  ${YELLOW}(tidak ada extra repo)${NC}"
     fi
 }
 
+search_pkg() {
+    query="$1"
+    echo -e "${CYAN}── Search: $query ──${NC}"
+    found=0
+    for repo in $(get_repo_names); do
+        pkgs=$(repo_list_pkgs "$repo" 2>/dev/null)
+        for pkg in $pkgs; do
+            case "$pkg" in
+                *"$query"*)
+                    desc=$(repo_desc "$repo" "$pkg" 2>/dev/null || echo "")
+                    echo -e "  ${GREEN}$pkg${NC} — $desc"
+                    echo -e "    ${BLUE}from${NC} $repo"
+                    found=1
+                    ;;
+            esac
+        done
+    done
+    [ "$found" -eq 0 ] && echo -e "  ${RED}[✗]${NC} Tidak ada hasil untuk '$query'"
+}
+
+info_pkg() {
+    pkg="$1"
+    found=0
+    for repo in $(get_repo_names); do
+        dl_url="${repo}/packages/${pkg}.tar.gz"
+        if wget -q --spider "$dl_url" 2>/dev/null; then
+            desc=$(repo_desc "$repo" "$pkg" 2>/dev/null || echo "N/A")
+            echo -e "${CYAN}── Info: $pkg ──${NC}"
+            echo -e "  ${BLUE}Package:${NC} $pkg"
+            echo -e "  ${BLUE}Description:${NC} $desc"
+            echo -e "  ${BLUE}Repo:${NC} $repo"
+            echo -e "  ${BLUE}URL:${NC} $dl_url"
+            if grep -qxF "$pkg" "$DB" 2>/dev/null; then
+                echo -e "  ${GREEN}Status:${NC} ${GREEN}Installed${NC}"
+            else
+                echo -e "  ${RED}Status:${NC} ${RED}Not installed${NC}"
+            fi
+            found=1
+            break
+        fi
+    done
+    [ "$found" -eq 0 ] && echo -e "${RED}[✗]${NC} Package $pkg tidak ditemukan."
+}
+
 install_pkg() {
     pkg="$1"
     found=0
-    for repo in "$MAIN_REPO" $(cat "$REPO_FILE" 2>/dev/null); do
+    for repo in $(get_repo_names); do
         dl_url="${repo}/packages/${pkg}.tar.gz"
         if wget -q --spider "$dl_url" 2>/dev/null; then
+            desc=$(repo_desc "$repo" "$pkg" 2>/dev/null || echo "")
             echo -e "${BLUE}[→]${NC} $pkg ditemukan di $repo"
+            echo -e "  ${CYAN}$desc${NC}"
             echo -ne "${YELLOW}[?]${NC} Install $pkg dari $repo? [Y/n]: "
             read -r answer
             case "$answer" in
@@ -101,6 +165,7 @@ install_pkg() {
     done
     if [ "$found" -eq 0 ]; then
         echo -e "${RED}[✗]${NC} Package $pkg tidak ditemukan di repo manapun."
+        echo -e "  ${BLUE}Try:${NC} ezpkg search $pkg"
     fi
 }
 
@@ -109,16 +174,28 @@ do_list() {
     if [ -f "$DB" ]; then cat "$DB"; else echo "(none)"; fi
 }
 
+repo_update() {
+    echo -e "${CYAN}── Updating repo info ──${NC}"
+    for repo in $(get_repo_names); do
+        count=$(repo_list_pkgs "$repo" 2>/dev/null | wc -w)
+        echo -e "  ${BLUE}$repo${NC} — $count packages available"
+    done
+    echo -e "${GREEN}[✓]${NC} Repo info updated."
+}
+
 case "${1:-}" in
     repo)
         case "${2:-}" in
             add) [ -z "${3:-}" ] && { echo "Usage: ezpkg repo add <url>"; exit 1; }; repo_add "$3" ;;
             remove) [ -z "${3:-}" ] && { echo "Usage: ezpkg repo remove <url>"; exit 1; }; repo_remove "$3" ;;
             list) repo_list ;;
-            *) echo "Usage: ezpkg repo add|remove|list <url>"; exit 1 ;;
+            update) repo_update ;;
+            *) echo "Usage: ezpkg repo add|remove|list|update <url>"; exit 1 ;;
         esac
         ;;
     install) [ -z "${2:-}" ] && { echo "Usage: ezpkg install <package>"; exit 1; }; banner; install_pkg "$2" ;;
+    search) [ -z "${2:-}" ] && { echo "Usage: ezpkg search <query>"; exit 1; }; banner; search_pkg "$2" ;;
+    info) [ -z "${2:-}" ] && { echo "Usage: ezpkg info <package>"; exit 1; }; banner; info_pkg "$2" ;;
     list) banner; do_list ;;
-    *) echo "EZPKG - EZOS Package Manager"; echo; echo "Usage:"; echo "  ezpkg install <pkg>"; echo "  ezpkg repo add <url>"; echo "  ezpkg repo remove <url>"; echo "  ezpkg repo list"; echo "  ezpkg list" ;;
+    *) echo "EZPKG - EZOS Package Manager"; echo; echo "Usage:"; echo "  ezpkg install <pkg>"; echo "  ezpkg search <query>"; echo "  ezpkg info <pkg>"; echo "  ezpkg repo add <url>"; echo "  ezpkg repo remove <url>"; echo "  ezpkg repo list"; echo "  ezpkg repo update"; echo "  ezpkg list" ;;
 esac
