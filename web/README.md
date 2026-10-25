@@ -26,11 +26,13 @@ Then visit `http://localhost:8000`.
 |-----|-------------|
 | Terminal | `ezsh` shell with 20+ commands, history, pipes-to-file (`echo hi > file.txt`) |
 | Files | Browse the virtual filesystem, create/delete folders & files |
+| Store | Package browser — install/remove packages from `ezos-repo` |
 | Editor | Text editor with Ctrl+S save, path bar, status line |
 | Calculator | Keyboard + touch friendly |
 | Paint | Draw, erase, save PNG into `/home/user/Pictures` |
 | Snake | Classic snake with persistent high score |
 | Settings | 4 themes, 6 accent colors, 5 wallpapers, sound, reset |
+| System Monitor | Live uptime, storage and process list (open via `htop`) |
 | Preview | Image viewer for drawings saved from Paint |
 | About | System info & shortcuts |
 
@@ -44,6 +46,39 @@ theme <name>    wallpaper <name>    history    reboot    exit
 ```
 
 Shortcuts: `Ctrl+Alt+T` terminal · `Ctrl+S` save (Editor) · `Esc` close menus.
+
+## Package manager (`ezpkg`)
+
+Packages are served by the [ezos-repo](https://github.com/mrzgamingv20-cyber/ezos-repo)
+package repository. The index is fetched from GitHub at runtime (with an offline fallback).
+
+```
+ezpkg list-remote          # available packages
+ezpkg search json          # search name/description
+ezpkg info jq              # package details + download URL
+ezpkg install fastfetch    # install
+ezpkg install htop jq      # multiple
+ezpkg list                 # installed
+ezpkg remove jq            # uninstall
+ezpkg update               # refresh index
+```
+
+Installed packages unlock terminal commands:
+
+| Package | Command |
+|---------|---------|
+| fastfetch | `fastfetch` — system info |
+| htop | `htop` — opens System Monitor |
+| jq | `jq . file.json` — JSON pretty printer |
+| curl | `curl <url>` — fetch text (CORS permitting) |
+| dig | `dig <domain>` — DNS lookup via dns.google |
+| ezupdate | `ezupdate` — check latest ezos-repo commit |
+| ezinfo | `ezinfo` — system info + credits |
+| hello | `hello` |
+| ssh, scp, sftp, rsync, tcpdump, … | simulated (native binaries can't run in a browser) |
+
+Install manifests are written to `/var/lib/ezpkg/` inside the virtual filesystem,
+so you can inspect them with Files or `cat`.
 
 ## Notes
 

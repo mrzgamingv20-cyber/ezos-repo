@@ -26,6 +26,7 @@ The web edition (`web/index.html`) is a single-file OS simulation with:
 
 - 🪟 Window manager (drag, resize, minimize, maximize)
 - ⌨️ `ezsh` terminal with 20+ commands (`ls`, `cd`, `cat`, `neofetch`, `tree`, `echo > file`, …)
+- 🛍️ Store + `ezpkg` package manager — installs package metadata from this repo's `packages/`
 - 📁 Files, 📝 Editor, 🧮 Calculator, 🎨 Paint, 🐍 Snake, 🖼️ Preview
 - ⚙️ Settings: 4 themes, 6 accent colors, 5 wallpapers
 - 💾 Persistent virtual filesystem via `localStorage`

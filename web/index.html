@@ -156,7 +156,7 @@ body.dragging,body.dragging *{user-select:none!important;cursor:grabbing!importa
 
 /* ---------- settings ---------- */
 .settings{position:absolute;inset:0;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:18px;background:var(--panel-solid);color:var(--text)}
-.set-sec h4{margin:0 0 9px;font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:700}
+ .set-sec h4{margin:0 0 9px;font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:700}
 .set-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:12.5px}
 .set-row:last-child{border-bottom:none}
 .theme-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -170,6 +170,46 @@ body.dragging,body.dragging *{user-select:none!important;cursor:grabbing!importa
 .wps{display:flex;gap:8px;flex-wrap:wrap}
 .wp{width:92px;height:54px;border-radius:10px;cursor:pointer;border:2px solid var(--border)}
 .wp.active{border-color:var(--accent)}
+
+/* ---------- package store ---------- */
+.store{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--panel-solid);color:var(--text)}
+.store-top{flex:none;display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.store-title{font-weight:700;font-size:13px;display:flex;align-items:center;gap:7px}
+.store-title .badge{font-size:9.5px;font-weight:600;font-family:var(--mono);color:var(--muted);padding:3px 7px;border-radius:99px;background:var(--tint1);border:1px solid var(--border)}
+.store-search{flex:1;min-width:130px;height:30px;background:var(--tint1);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;padding:0 10px;outline:none}
+.store-search:focus{border-color:var(--accent)}
+.store-list{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.store-empty{padding:28px 12px;text-align:center;font-size:12px;color:var(--muted);line-height:1.7}
+.pkg{display:flex;gap:12px;align-items:center;padding:11px 12px;border:1px solid var(--border);border-radius:12px;background:var(--tint1)}
+.pkg-ic{width:40px;height:40px;flex:none;border-radius:11px;display:grid;place-items:center;font-size:19px;background:linear-gradient(145deg,rgba(56,189,248,.22),rgba(167,139,250,.22));border:1px solid var(--border)}
+.pkg-meta{flex:1;min-width:0}
+.pkg-name{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pkg-name .tag{font-size:9px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:99px;padding:1px 6px;letter-spacing:.04em}
+.pkg-desc{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+.pkg-sub{font-size:10px;color:var(--muted);margin-top:3px;font-family:var(--mono);opacity:.8}
+.pkg-act{flex:none;display:flex;gap:6px;align-items:center}
+.pkg-act .btn{height:29px;padding:0 11px;font-size:11.5px}
+.pkg-act .btn[disabled]{opacity:.55;pointer-events:none}
+.pkg-act .btn.installed{background:transparent;border-color:var(--border);color:var(--muted)}
+.store-foot{flex:none;display:flex;gap:10px;align-items:center;padding:7px 12px;border-top:1px solid var(--border);font-size:10.5px;color:var(--muted)}
+.store-foot a{color:var(--accent);text-decoration:none}
+.store-note{flex:none;font-size:10.5px;color:var(--muted);padding:6px 12px 10px;line-height:1.55}
+
+/* ---------- system monitor ---------- */
+.mon{position:absolute;inset:0;overflow:auto;padding:14px;background:var(--panel-solid);color:var(--text);display:flex;flex-direction:column;gap:10px}
+.mon-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mon-card{border:1px solid var(--border);border-radius:12px;padding:11px 12px;background:var(--tint1)}
+.mon-card h5{margin:0 0 8px;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700}
+.mon-big{font-family:var(--mono);font-size:17px;font-weight:700}
+.mon-sub{font-size:10.5px;color:var(--muted);margin-top:3px;font-family:var(--mono)}
+.mon-bar{height:6px;border-radius:99px;background:var(--tint3);overflow:hidden;margin-top:8px}
+.mon-bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+.mon-proc{width:100%;border-collapse:collapse;font-size:11.5px;font-family:var(--mono)}
+.mon-proc th{text-align:left;font-weight:600;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;padding:4px 6px;border-bottom:1px solid var(--border)}
+.mon-proc td{padding:5px 6px;border-bottom:1px solid var(--border)}
+.mon-proc tr:last-child td{border-bottom:none}
+.mon-proc .st-run{color:#34d399}
+.mon-proc .st-min{color:var(--muted)}
 
 /* ---------- about ---------- */
 .about{position:absolute;inset:0;overflow:auto;padding:22px;color:var(--text);background:var(--panel-solid);display:flex;flex-direction:column;gap:12px}
@@ -417,6 +457,7 @@ const FS = {
           '  • Open Terminal and type: help  /  neofetch\n' +
           '  • Create a file in Editor and save it to /home/user/Documents\n' +
           '  • Play Snake or draw something in Paint\n' +
+          '  • Open Store or run: ezpkg install fastfetch\n' +
           '  • Right-click the desktop for options\n' +
           '  • Change themes in Settings\n\n' +
           'Everything you create is stored in your browser (localStorage),\n' +
@@ -516,6 +557,144 @@ const FS = {
     });
   }
 };
+
+/* ---------------- package manager (ezpkg) + ezos-repo ---------------- */
+const PKG_REPO_URL = 'https://github.com/mrzgamingv20-cyber/ezos-repo';
+const PKG_BASE = 'https://raw.githubusercontent.com/mrzgamingv20-cyber/ezos-repo/main/packages';
+
+/* Mirrors packages/index.json from ezos-repo so the store also works offline. */
+const PKG_FALLBACK = {
+  curl: 'Command-line tool for transferring data with URLs',
+  dig: 'DNS lookup utility',
+  htop: 'Interactive process viewer',
+  iperf2: 'Network bandwidth measurement tool (v2)',
+  iperf3: 'Network bandwidth measurement tool (v3)',
+  jq: 'Command-line JSON processor',
+  rsync: 'Fast file copying/sync tool',
+  scp: 'Secure file copy over SSH',
+  sftp: 'Secure file transfer over SSH',
+  ssh: 'Secure shell client',
+  'ssh-keygen': 'SSH key generator',
+  'ssh-keyscan': 'SSH public key scanner',
+  tcpdump: 'Network packet analyzer',
+  hello: 'Test package',
+  ezupdate: 'Cek update image EZOS terbaru dari GHCR',
+  ezinfo: 'Show EZOS system info and credits',
+  fastfetch: 'Fast system information tool'
+};
+
+const PKG_ICONS = {
+  curl:'🌐', dig:'📡', htop:'📊', iperf2:'📶', iperf3:'📶', jq:'🧩',
+  rsync:'♻️', scp:'📤', sftp:'📁', ssh:'🔐', 'ssh-keygen':'🔑',
+  'ssh-keyscan':'🛰️', tcpdump:'🕵️', hello:'👋', ezupdate:'🔄',
+  ezinfo:'💠', fastfetch:'🖥️'
+};
+
+const PKG = {
+  BASE: PKG_BASE,
+  index: null,
+  indexAt: 0,
+  offline: false,
+  installed: {},
+
+  load(){
+    try {
+      const data = JSON.parse(localStorage.getItem('ezos.pkgs.v1') || '{}');
+      this.installed = data && typeof data === 'object' ? data : {};
+    } catch(e){ this.installed = {}; }
+  },
+
+  save(){
+    try { localStorage.setItem('ezos.pkgs.v1', JSON.stringify(this.installed)); } catch(e){}
+    this.mirror();
+  },
+
+  /* Keep a readable manifest inside the virtual filesystem: /var/lib/ezpkg */
+  mirror(){
+    try {
+      if(!FS.node('/var/lib')) FS.mkdir('/var/lib');
+      if(!FS.node('/var/lib/ezpkg')) FS.mkdir('/var/lib/ezpkg');
+      const dir = '/var/lib/ezpkg';
+      const manifest = {};
+      for(const [name, meta] of Object.entries(this.installed)){
+        manifest[name] = { installedAt: new Date(meta.at).toISOString(), size: meta.size };
+        if(!FS.node(`${dir}/${name}.json`)){
+          FS.write(`${dir}/${name}.json`, JSON.stringify({
+            name,
+            description: (this.index && this.index[name]) || (PKG_FALLBACK[name] || ''),
+            installedAt: new Date(meta.at).toISOString(),
+            size: meta.size,
+            source: `${this.BASE}/${name}.tar.gz`
+          }, null, 2));
+        }
+      }
+      FS.write(`${dir}/installed.json`, JSON.stringify(manifest, null, 2));
+      const d = FS.node(dir);
+      if(d && d.children){
+        Object.keys(d.children).forEach(f => {
+          if(f.endsWith('.json') && f !== 'installed.json' && !this.installed[f.slice(0, -5)]){
+            FS.rm(`${dir}/${f}`);
+          }
+        });
+      }
+    } catch(e){}
+  },
+
+  isInstalled(name){ return !!this.installed[name]; },
+  list(){ return Object.keys(this.installed).sort(); },
+
+  async fetchIndex(force=false){
+    if(!force && this.index && Date.now() - this.indexAt < 5 * 60 * 1000) return this.index;
+    try {
+      const res = await fetch(`${this.BASE}/index.json?t=${Date.now()}`, { cache:'no-store' });
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if(!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('invalid index');
+      this.index = data;
+      this.offline = false;
+    } catch(e){
+      this.index = { ...PKG_FALLBACK };
+      this.offline = true;
+    }
+    this.indexAt = Date.now();
+    return this.index;
+  },
+
+  async sizeOf(name){
+    try {
+      const res = await fetch(`${this.BASE}/${encodeURIComponent(name)}.tar.gz`, { method:'HEAD', cache:'no-store' });
+      if(!res.ok) return null;
+      const n = Number(res.headers.get('content-length'));
+      return Number.isFinite(n) && n > 0 ? n : null;
+    } catch(e){ return null; }
+  },
+
+  async install(name){
+    const idx = await this.fetchIndex();
+    if(!Object.prototype.hasOwnProperty.call(idx, name)) throw new Error(`package '${name}' not found`);
+    if(this.installed[name]) return { already:true, size:this.installed[name].size };
+    const size = await this.sizeOf(name);
+    this.installed[name] = { at: Date.now(), size };
+    this.save();
+    return { size };
+  },
+
+  remove(name){
+    if(!this.installed[name]) return false;
+    delete this.installed[name];
+    this.save();
+    return true;
+  }
+};
+PKG.load();
+
+function fmtBytes(n){
+  if(n == null || !Number.isFinite(Number(n))) return '—';
+  n = Number(n);
+  if(n < 1024) return n + ' B';
+  if(n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+  return (n / 1024 / 1024).toFixed(1) + ' MB';
+}
 
 /* ---------------- toasts & dialogs ---------------- */
 function toast(msg, icon='✓'){
@@ -831,6 +1010,7 @@ function openTerminal(win){
       ['whoami','Show current user'],
       ['uname [-a]','System name'],
       ['open <app>','Launch an app'],
+      ['ezpkg <cmd>','Package manager (ezos-repo)'],
       ['cowsay <text>','Moo.'],
       ['theme [name]','Change color theme'],
       ['wallpaper [name]','Change wallpaper'],
@@ -839,6 +1019,8 @@ function openTerminal(win){
       ['exit','Close this terminal']
     ];
     rows.forEach(([c, d]) => print(`<span class="ok">${esc(pad(c, 26))}</span><span class="dim">${esc(d)}</span>`));
+    print('');
+    print(dim("Installed packages add commands: try 'ezpkg install fastfetch' or open Store."));
   }
 
   function treeText(node, prefix='', depth=0){
@@ -857,7 +1039,127 @@ function openTerminal(win){
     return txt;
   }
 
-  function run(raw){
+  async function ezpkgCmd(args){
+    const sub = (args[0] || 'help').toLowerCase();
+    try {
+      if(sub === 'help' || sub === '--help' || sub === '-h'){
+        const rows = [
+          ['list-remote','List available packages'],
+          ['search <q>','Search by name or description'],
+          ['info <pkg>','Show package details'],
+          ['install <pkg>...','Install one or more packages'],
+          ['remove <pkg>...','Remove installed packages'],
+          ['list','Show installed packages'],
+          ['update','Refresh the package index'],
+          ['repo','Show the configured repository'],
+          ['version','Show ezpkg version']
+        ];
+        print('Usage: ezpkg <command> [args]');
+        rows.forEach(([c, d]) => print(`<span class="ok">${esc(pad('  ' + c, 26))}</span><span class="dim">${esc(d)}</span>`));
+        return;
+      }
+
+      if(sub === 'version' || sub === '-v'){
+        print('ezpkg 1.0-web (EZOS 3.0)');
+        return;
+      }
+
+      if(sub === 'repo'){
+        print(`repo: ${esc(PKG.BASE)}`);
+        print(dim(`source: ${PKG_REPO_URL}`));
+        return;
+      }
+
+      if(sub === 'list' || sub === 'installed'){
+        const list = PKG.list();
+        if(!list.length){ print(dim("No packages installed. Try: ezpkg install fastfetch")); return; }
+        for(const name of list){
+          const meta = PKG.installed[name] || {};
+          print(`<span class="ok">✓</span> ${esc(pad(name, 16))} <span class="dim">${esc(fmtBytes(meta.size))}</span>`);
+        }
+        print(dim(`${list.length} package(s) installed · manifests in /var/lib/ezpkg`));
+        return;
+      }
+
+      if(sub === 'list-remote' || sub === 'search'){
+        print(dim('Fetching index…'));
+        const idx = await PKG.fetchIndex();
+        const q = sub === 'search' ? (args[1] || '').toLowerCase() : '';
+        const names = Object.keys(idx).filter(name =>
+          !q || name.toLowerCase().includes(q) || String(idx[name]).toLowerCase().includes(q)
+        ).sort();
+        if(!names.length){ print(err(`ezpkg: no packages match '${args[1] || ''}'`)); return; }
+        for(const name of names){
+          const installed = PKG.isInstalled(name);
+          print(`${installed ? '<span class="ok">●</span>' : '<span class="dim">○</span>'} <span class="${installed ? 'ok' : ''}">${esc(pad(name, 16))}</span> <span class="dim">${esc(idx[name])}</span>`);
+        }
+        print(dim(`${names.length} package(s) · ${PKG.offline ? 'offline fallback index' : 'ezos-repo/main'}`));
+        return;
+      }
+
+      if(sub === 'info'){
+        const name = args[1];
+        if(!name){ print(err('usage: ezpkg info <pkg>')); return; }
+        print(dim('Fetching index…'));
+        const idx = await PKG.fetchIndex();
+        if(!Object.prototype.hasOwnProperty.call(idx, name)){ print(err(`ezpkg: ${name}: package not found`)); return; }
+        print(`<span class="ok">${esc(name)}</span> <span class="dim">— ${esc(idx[name])}</span>`);
+        print(`Installed : ${PKG.isInstalled(name) ? 'yes' : 'no'}`);
+        if(PKG.isInstalled(name)) print(`Size      : ${esc(fmtBytes(PKG.installed[name].size))}`);
+        print(`Package   : ${esc(`${PKG.BASE}/${name}.tar.gz`)}`);
+        print(`Command   : ${PKG_CMDS[name] ? 'adds the ' + esc(name) + ' command' : 'no command registration'}`);
+        return;
+      }
+
+      if(sub === 'install'){
+        const names = args.slice(1);
+        if(!names.length){ print(err('usage: ezpkg install <pkg>...')); return; }
+        print(dim('Fetching index…'));
+        const idx = await PKG.fetchIndex();
+        for(const name of names){
+          if(!Object.prototype.hasOwnProperty.call(idx, name)){ print(err(`ezpkg: ${name}: package not found`)); continue; }
+          if(PKG.isInstalled(name)){ print(dim(`${name}: already installed`)); continue; }
+          print(dim(`Downloading ${name}.tar.gz…`));
+          const res = await PKG.install(name);
+          print(`<span class="ok">✓</span> ${esc(name)} ${esc(fmtBytes(res.size))} <span class="dim">installed</span>`);
+        }
+        const ready = names.filter(n => PKG.isInstalled(n) && PKG_CMDS[n]);
+        if(ready.length) print(dim(`new command(s): ${ready.join(', ')}`));
+        return;
+      }
+
+      if(sub === 'remove' || sub === 'uninstall'){
+        const names = args.slice(1);
+        if(!names.length){ print(err('usage: ezpkg remove <pkg>...')); return; }
+        for(const name of names){
+          if(PKG.remove(name)) print(`<span class="ok">✓</span> ${esc(name)} removed`);
+          else print(dim(`${name}: not installed`));
+        }
+        return;
+      }
+
+      if(sub === 'update' || sub === 'refresh'){
+        print(dim('Fetching index…'));
+        const idx = await PKG.fetchIndex(true);
+        print(ok(`index updated — ${Object.keys(idx).length} package(s)`));
+        if(PKG.offline) print(dim('network unavailable, using the built-in offline index'));
+        return;
+      }
+
+      if(sub === 'clean'){
+        print(dim('package cache is clean'));
+        return;
+      }
+
+      print(err(`ezpkg: unknown command '${sub}'`));
+      print(dim("run 'ezpkg help'"));
+    } catch(e){
+      print(err('ezpkg: ' + (e && e.message ? e.message : 'network error')));
+      print(dim('check your connection — the store has an offline fallback index'));
+    }
+  }
+
+  async function run(raw){
     const line = raw.trim();
     const tokens = tokenize(line);
     const cmd = tokens[0] || '';
@@ -865,8 +1167,21 @@ function openTerminal(win){
 
     if(!cmd) return;
 
+    const dynamic = PKG_CMDS[cmd];
+    if(dynamic){
+      if(!PKG.isInstalled(dynamic.pkg)){
+        print(err(`${cmd}: command not found (package '${dynamic.pkg}' is not installed)`));
+        print(dim(`install it with: ezpkg install ${dynamic.pkg}`));
+        return;
+      }
+      await dynamic.run(args, { print, err, ok, dim, D, cwd });
+      return;
+    }
+
     switch(cmd){
       case 'help': helpText(); break;
+
+      case 'ezpkg': await ezpkgCmd(args); break;
 
       case 'ls': {
         const target = args[0] ? FS.norm(args[0], cwd) : cwd;
@@ -1051,7 +1366,9 @@ function openTerminal(win){
     }
   }
 
-  function submit(){
+  let busy = false;
+  async function submit(){
+    if(busy) return;
     const raw = input.value;
     input.value = '';
     if(raw.trim()){
@@ -1059,7 +1376,9 @@ function openTerminal(win){
       hIdx = history.length;
     }
     print(`<span class="p">${esc(promptText())}</span> ${esc(raw)}`);
-    run(raw);
+    busy = true;
+    try { await run(raw); }
+    finally { busy = false; }
     print('');
     refreshPrompt();
     out.scrollTop = out.scrollHeight;
@@ -1538,6 +1857,7 @@ function openAbout(win){
     <div style="font-size:12.5px;line-height:2;color:var(--muted)">
       <div><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> — open Terminal</div>
       <div><kbd>Ctrl</kbd> + <kbd>S</kbd> — save in Editor</div>
+      <div><kbd>ezpkg</kbd> install fastfetch — packages from ezos-repo</div>
       <div><kbd>↑</kbd> / <kbd>↓</kbd> — terminal command history</div>
       <div><kbd>Esc</kbd> — close menus &amp; dialogs</div>
     </div>
@@ -1821,17 +2141,370 @@ function openPaint(win){
   });
 }
 
+/* ---------------- app: store ---------------- */
+function openStore(win){
+  const wrap = el('div', 'store');
+  wrap.innerHTML = `
+    <div class="store-top">
+      <div class="store-title">🛍️ Store <span class="badge" data-k="badge">ezos-repo</span></div>
+      <input class="store-search" placeholder="Search packages…" spellcheck="false" autocomplete="off" aria-label="Search packages">
+      <button class="icon-btn" data-a="refresh" title="Refresh index">↻</button>
+    </div>
+    <div class="store-list"><div class="store-empty">Fetching package index…</div></div>
+    <div class="store-note">Packages come from <b>ezos-repo</b>. Installing registers Linux package metadata and adds terminal commands where available — the browser cannot execute native ELF binaries.</div>
+    <div class="store-foot"><span data-k="count">—</span><span style="flex:1"></span><a href="${PKG_REPO_URL}" target="_blank" rel="noopener">mrzgamingv20-cyber/ezos-repo ↗</a></div>`;
+  win.body.appendChild(wrap);
+
+  const listEl = wrap.querySelector('.store-list');
+  const searchEl = wrap.querySelector('.store-search');
+  const badgeEl = wrap.querySelector('[data-k=badge]');
+  const countEl = wrap.querySelector('[data-k=count]');
+  let index = null;
+  let query = '';
+
+  const matches = name => {
+    if(!query) return true;
+    return name.toLowerCase().includes(query) || String(index[name] || '').toLowerCase().includes(query);
+  };
+
+  function render(){
+    if(!index) return;
+    badgeEl.textContent = PKG.offline ? 'offline index' : 'ezos-repo · main';
+    badgeEl.style.color = PKG.offline ? '#fbbf24' : '';
+    const names = Object.keys(index).filter(matches).sort();
+    countEl.textContent = `${Object.keys(index).length} packages · ${PKG.list().length} installed`;
+    listEl.innerHTML = '';
+    if(!names.length){
+      listEl.innerHTML = `<div class="store-empty">No packages match “${esc(query)}”.</div>`;
+      return;
+    }
+    for(const name of names) listEl.appendChild(pkgCard(name));
+  }
+
+  function pkgCard(name){
+    const installed = PKG.isInstalled(name);
+    const meta = PKG.installed[name];
+    const row = el('div', 'pkg');
+    row.innerHTML = `
+      <div class="pkg-ic">${PKG_ICONS[name] || '📦'}</div>
+      <div class="pkg-meta">
+        <div class="pkg-name">${esc(name)}${installed ? '<span class="tag">INSTALLED</span>' : ''}</div>
+        <div class="pkg-desc">${esc(index[name] || '')}</div>
+        <div class="pkg-sub">${PKG_CMDS[name] ? '⌨ adds command: ' + esc(name) : '📄 metadata / files only'}${installed && meta ? ' · ' + esc(fmtBytes(meta.size)) : ''}</div>
+      </div>
+      <div class="pkg-act"></div>`;
+    const act = row.querySelector('.pkg-act');
+    const btn = document.createElement('button');
+    btn.className = 'btn ' + (installed ? 'installed' : 'primary');
+    btn.textContent = installed ? 'Remove' : 'Install';
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      btn.textContent = installed ? 'Removing…' : 'Installing…';
+      try {
+        if(installed){
+          PKG.remove(name);
+          toast(`Removed ${name}`, '🗑');
+        } else {
+          const res = await PKG.install(name);
+          toast(`${name} installed${res.size ? ' · ' + fmtBytes(res.size) : ''}`, '📦');
+        }
+        render();
+      } catch(e){
+        toast(`Failed: ${e.message}`, '⚠️');
+        btn.disabled = false;
+        btn.textContent = installed ? 'Remove' : 'Install';
+      }
+    });
+    act.appendChild(btn);
+    return row;
+  }
+
+  async function load(force=false){
+    listEl.innerHTML = '<div class="store-empty">Fetching package index…</div>';
+    try { index = await PKG.fetchIndex(force); }
+    catch(e){ index = { ...PKG_FALLBACK }; PKG.offline = true; }
+    render();
+  }
+
+  searchEl.addEventListener('input', () => { query = searchEl.value.trim().toLowerCase(); render(); });
+  wrap.querySelector('[data-a=refresh]').addEventListener('click', () => {
+    load(true);
+    toast('Refreshing package index…', '🔄');
+  });
+
+  load();
+}
+
+/* ---------------- app: system monitor ---------------- */
+function openMonitor(win){
+  const wrap = el('div', 'mon');
+  wrap.innerHTML = `
+    <div class="mon-grid">
+      <div class="mon-card">
+        <h5>System</h5>
+        <div class="mon-big" data-k="up">—</div>
+        <div class="mon-sub" data-k="sys">—</div>
+      </div>
+      <div class="mon-card">
+        <h5>Storage · localStorage</h5>
+        <div class="mon-big" data-k="mem">—</div>
+        <div class="mon-bar"><i data-k="membar" style="width:0%"></i></div>
+        <div class="mon-sub" data-k="memsub">—</div>
+      </div>
+    </div>
+    <div class="mon-card" style="flex:1;min-height:120px">
+      <h5>Processes</h5>
+      <table class="mon-proc">
+        <thead><tr><th>PID</th><th>APP</th><th>STATE</th><th>MEM</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>`;
+  win.body.appendChild(wrap);
+
+  const tbody = wrap.querySelector('tbody');
+  const upEl = wrap.querySelector('[data-k=up]');
+  const sysEl = wrap.querySelector('[data-k=sys]');
+  const memEl = wrap.querySelector('[data-k=mem]');
+  const memBar = wrap.querySelector('[data-k=membar]');
+  const memSub = wrap.querySelector('[data-k=memsub]');
+  const LIMIT_KB = 5 * 1024;
+
+  function tick(){
+    upEl.textContent = fmtUptime(Date.now() - SESSION_START);
+    sysEl.textContent = `ezos-js 3.0 · ${window.innerWidth}×${window.innerHeight} · ${settings.theme}`;
+
+    let kb = 0;
+    try {
+      for(let i = 0; i < localStorage.length; i++){
+        const key = localStorage.key(i);
+        const val = localStorage.getItem(key) || '';
+        kb += (key.length + val.length) / 1024;
+      }
+    } catch(e){}
+    let heapText = '';
+    try {
+      if(performance.memory){
+        const used = performance.memory.usedJSHeapSize;
+        const limit = performance.memory.jsHeapSizeLimit || 1;
+        heapText = ` · JS heap ${fmtBytes(used)}`;
+      }
+    } catch(e){}
+    memEl.textContent = kb.toFixed(1) + ' KB';
+    memBar.style.width = Math.min(100, (kb / LIMIT_KB) * 100).toFixed(1) + '%';
+    memSub.textContent = `approx. ${(kb / LIMIT_KB * 100).toFixed(1)}% of ~5 MB quota${heapText}`;
+
+    const wins = Array.from(WM.windows.values());
+    if(!wins.length){
+      tbody.innerHTML = `<tr><td colspan="4" style="color:var(--muted)">no user processes</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = wins.map((w, i) => {
+      const n = parseInt(String(w.id).replace(/\D/g, ''), 10) || (i + 1);
+      const pid = 100 + (n % 900);
+      const mem = 18 + ((n * 13) % 54);
+      const state = w.minimized ? '<span class="st-min">sleeping</span>' : '<span class="st-run">running</span>';
+      return `<tr><td>${pid}</td><td>${esc(w.appId)}</td><td>${state}</td><td>${mem} MB</td></tr>`;
+    }).join('');
+  }
+
+  tick();
+  const timer = setInterval(tick, 1000);
+  win.onClose.push(() => clearInterval(timer));
+}
+
+/* ---------------- commands unlocked by installed packages ---------------- */
+const PKG_STUB_MSG = 'native binary — not executable inside the browser sandbox';
+
+function pkgStub(name){
+  return {
+    pkg: name,
+    run: async (args, t) => {
+      t.print(t.err(`${name}: ${PKG_STUB_MSG}`));
+      t.print(t.dim('The package is installed in /var/lib/ezpkg, but only metadata can be simulated on the web.'));
+      t.print(t.dim('Try fastfetch, htop, jq, curl or dig for working web replacements.'));
+    }
+  };
+}
+
+const PKG_CMDS = {
+  fastfetch: {
+    pkg: 'fastfetch',
+    run: async (args, t) => {
+      const art = [
+        '   ███████╗███████╗ ██████╗ ███████╗',
+        '   ██╔════╝╚══███╔╝██╔═══██╗██╔════╝',
+        '   █████╗    ███╔╝ ██║   ██║███████╗',
+        '   ██╔══╝   ███╔╝  ██║   ██║╚════██║',
+        '   ███████╗███████╗╚██████╔╝███████║',
+        '   ╚══════╝╚══════╝ ╚═════╝ ╚══════╝'
+      ];
+      art.forEach(line => t.print(t.D(line)));
+      const engine = navigator.userAgent.includes('Firefox') ? 'Firefox'
+        : (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome') ? 'Safari' : 'Chromium');
+      const rows = [
+        ['OS', 'EZOS 3.0 Web Edition (Horizon)'],
+        ['Kernel', 'ezos-js 3.0'],
+        ['Shell', 'ezsh'],
+        ['Packages', PKG.list().length + ' installed'],
+        ['Uptime', fmtUptime(Date.now() - SESSION_START)],
+        ['Resolution', window.innerWidth + '×' + window.innerHeight],
+        ['Theme', settings.theme + ' · ' + settings.wallpaper],
+        ['Engine', engine]
+      ];
+      t.print('');
+      t.print('<span class="ok">user@ezos</span> <span class="dim">─────────────</span>');
+      rows.forEach(([k, v]) => t.print(`${t.dim(pad(k, 11))}${esc(v)}`));
+    }
+  },
+
+  ezinfo: {
+    pkg: 'ezinfo',
+    run: async (args, t) => {
+      t.print(t.D('EZOS 3.0 — Web Edition'));
+      t.print(t.dim('codename Horizon · single-file operating system experience'));
+      t.print('');
+      t.print('Built with vanilla HTML, CSS and JavaScript.');
+      t.print('No frameworks, no build step, no server.');
+      t.print('');
+      t.print(`Repo   ${t.D(PKG_REPO_URL)}`);
+      t.print(`Kernel ${esc('ezos-js 3.0')}`);
+      t.print(`Packages ${PKG.list().length} installed from ezos-repo`);
+      t.print('');
+      t.print(t.dim('— The EZOS team'));
+    }
+  },
+
+  hello: {
+    pkg: 'hello',
+    run: async (args, t) => {
+      t.print('Hello, world!');
+      t.print(t.dim('Installed from ezos-repo: hello.tar.gz'));
+    }
+  },
+
+  jq: {
+    pkg: 'jq',
+    run: async (args, t) => {
+      const raw = args.includes('-r') || args.includes('--raw-output');
+      const rest = args.filter(a => !['-r', '--raw-output'].includes(a));
+      let filter = '.';
+      let file = rest[0];
+      if(rest.length >= 2){ filter = rest[0]; file = rest[1]; }
+      if(!file){ t.print(t.err('usage: jq [-r] [filter] <file>')); return; }
+      const path = FS.norm(file, t.cwd);
+      const node = FS.node(path);
+      if(!node){ t.print(t.err(`jq: ${file}: No such file or directory`)); return; }
+      if(node.type !== 'file'){ t.print(t.err(`jq: ${file}: Is a directory`)); return; }
+      let data;
+      try { data = JSON.parse(node.content); }
+      catch(e){ t.print(t.err('jq: parse error: ' + e.message)); return; }
+      let out = data;
+      if(filter.trim() !== '.'){
+        const expr = filter.startsWith('.') ? filter : '.' + filter;
+        const parts = expr.slice(1).split('.').filter(Boolean);
+        for(const part of parts){
+          if(out == null) break;
+          const key = part.replace(/^\[(\d+)\]$/, '$1');
+          out = out[key];
+        }
+        if(out === undefined){ t.print(t.err('jq: null')); return; }
+      }
+      const text = typeof out === 'string' ? (raw ? out : JSON.stringify(out)) : JSON.stringify(out, null, 2);
+      t.print(esc(text));
+    }
+  },
+
+  curl: {
+    pkg: 'curl',
+    run: async (args, t) => {
+      const url = args.find(a => !a.startsWith('-'));
+      if(!url){ t.print(t.err('usage: curl <url>')); return; }
+      t.print(t.dim(`* fetching ${url}`));
+      try {
+        const res = await fetch(url);
+        const text = await res.text();
+        t.print(t.dim(`HTTP ${res.status} · ${text.length} bytes`));
+        t.print(esc(text.slice(0, 3000)));
+        if(text.length > 3000) t.print(t.dim('… output truncated'));
+      } catch(e){
+        t.print(t.err('curl: request failed — CORS or network blocked'));
+        t.print(t.dim(String(e.message || e)));
+      }
+    }
+  },
+
+  dig: {
+    pkg: 'dig',
+    run: async (args, t) => {
+      const types = ['A', 'AAAA', 'MX', 'TXT', 'CNAME', 'NS', 'SOA'];
+      const type = args.map(a => a.toUpperCase()).find(a => types.includes(a)) || 'A';
+      const name = args.find(a => !a.startsWith('-') && !types.includes(a.toUpperCase()));
+      if(!name){ t.print(t.err('usage: dig <domain> [A|AAAA|MX|TXT|...]')); return; }
+      t.print(t.dim(`; <<>> DiG-web <<>> ${name} ${type}`));
+      try {
+        const res = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(name)}&type=${type}`);
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        t.print('');
+        t.print(`;; status: ${esc(data.Status === 0 ? 'NOERROR' : String(data.Status))}`);
+        if(data.Answer && data.Answer.length){
+          t.print(';; ANSWER SECTION:');
+          data.Answer.forEach(a => t.print(`${esc(a.name)}  ${a.TTL}  IN  ${esc(a.type)}  ${esc(a.data)}`));
+        } else {
+          t.print(t.dim(';; no answer'));
+        }
+      } catch(e){
+        t.print(t.err('dig: lookup failed — ' + (e.message || 'network error')));
+      }
+    }
+  },
+
+  htop: {
+    pkg: 'htop',
+    run: async (args, t) => {
+      openApp('monitor');
+      t.print(t.ok('htop → opening System Monitor…'));
+    }
+  },
+
+  ezupdate: {
+    pkg: 'ezupdate',
+    run: async (args, t) => {
+      t.print(t.dim('Checking EZOS image and repository…'));
+      try {
+        const res = await fetch('https://api.github.com/repos/mrzgamingv20-cyber/ezos-repo/commits?per_page=1');
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const commits = await res.json();
+        const c = commits[0];
+        t.print(`Image   ${esc('ghcr.io/mrzgamingv20-cyber/ezos:latest')}`);
+        t.print(`Status  ${t.ok('up to date')}`);
+        if(c){
+          t.print(`Commit  ${esc(c.sha.slice(0, 7))} — ${esc(String(c.commit.message).split('\n')[0])}`);
+          t.print(`Date    ${esc(new Date(c.commit.author.date).toLocaleString())}`);
+        }
+      } catch(e){
+        t.print(t.err('ezupdate: could not reach GitHub — ' + (e.message || 'network error')));
+      }
+    }
+  }
+};
+
+['ssh', 'scp', 'sftp', 'ssh-keygen', 'ssh-keyscan', 'rsync', 'iperf2', 'iperf3', 'tcpdump']
+  .forEach(name => { PKG_CMDS[name] = pkgStub(name); });
+
 /* ---------------- app registry ---------------- */
 const APPS = {
   terminal:   { name:'Terminal',   icon:'⌨️', color:'linear-gradient(145deg,#0ea5e9,#0369a1)', size:[740,460], open: win => openTerminal(win) },
   files:      { name:'Files',      icon:'📁', color:'linear-gradient(145deg,#fbbf24,#d97706)', size:[820,520], open: (win, o) => openFiles(win, o) },
+  store:      { name:'Store',      icon:'🛍️', color:'linear-gradient(145deg,#f472b6,#a21caf)', size:[640,620], open: win => openStore(win) },
   editor:     { name:'Editor',     icon:'📝', color:'linear-gradient(145deg,#34d399,#059669)', size:[740,540], open: (win, o) => openEditor(win, o) },
   calculator: { name:'Calculator', icon:'🧮', color:'linear-gradient(145deg,#a78bfa,#7c3aed)', size:[330,470], open: win => openCalculator(win) },
   settings:   { name:'Settings',   icon:'⚙️', color:'linear-gradient(145deg,#94a3b8,#475569)', size:[540,590], open: win => openSettings(win) },
   paint:      { name:'Paint',      icon:'🎨', color:'linear-gradient(145deg,#f472b6,#be185d)', size:[780,560], open: win => openPaint(win) },
   snake:      { name:'Snake',      icon:'🐍', color:'linear-gradient(145deg,#4ade80,#15803d)', size:[470,600], open: win => openSnake(win) },
   about:      { name:'About',      icon:'💠', color:'linear-gradient(145deg,#38bdf8,#6366f1)', size:[470,560], open: win => openAbout(win) },
-  preview:    { name:'Preview',    icon:'🖼️', color:'linear-gradient(145deg,#f59e0b,#b45309)', size:[660,540], hidden:true, open: (win, o) => openPreview(win, o) }
+  preview:    { name:'Preview',    icon:'🖼️', color:'linear-gradient(145deg,#f59e0b,#b45309)', size:[660,540], hidden:true, open: (win, o) => openPreview(win, o) },
+  monitor:    { name:'System Monitor', icon:'📊', color:'linear-gradient(145deg,#38bdf8,#0f766e)', size:[580,440], hidden:true, open: win => openMonitor(win) }
 };
 
 function openApp(id, opts={}){
@@ -1852,6 +2525,7 @@ function openApp(id, opts={}){
 const DESKTOP_ICONS = [
   { type:'app', id:'terminal', label:'Terminal' },
   { type:'app', id:'files', label:'Files' },
+  { type:'app', id:'store', label:'Store' },
   { type:'app', id:'editor', label:'Editor' },
   { type:'file', path:'/home/user/welcome.txt', label:'welcome.txt' },
   { type:'app', id:'snake', label:'Snake' },
