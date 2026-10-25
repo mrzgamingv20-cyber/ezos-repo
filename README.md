@@ -14,6 +14,29 @@ Built on top of Debian "bookworm-slim", EZOS comes with its own branding, a cust
 - 🎨 **Branding**: Custom ASCII logo, MOTD, `/etc/os-release`, fastfetch config
 - 📦 **OCI Image**: Distributed via [GHCR](https://ghcr.io/mrzgamingv20-cyber/ezos:latest)
 - 📱 **Android Ready**: Runs directly on Android via Termux
+- 🌐 **EZOS Web**: Browser edition — a full desktop OS experience in one HTML file
+
+🌐 EZOS Web Edition
+
+Try EZOS directly in your browser — no install, no Termux, no server:
+
+**▶ [mrzgamingv20-cyber.github.io/ezos-repo](https://mrzgamingv20-cyber.github.io/ezos-repo/)**
+
+The web edition (`web/index.html`) is a single-file OS simulation with:
+
+- 🪟 Window manager (drag, resize, minimize, maximize)
+- ⌨️ `ezsh` terminal with 20+ commands (`ls`, `cd`, `cat`, `neofetch`, `tree`, `echo > file`, …)
+- 📁 Files, 📝 Editor, 🧮 Calculator, 🎨 Paint, 🐍 Snake, 🖼️ Preview
+- ⚙️ Settings: 4 themes, 6 accent colors, 5 wallpapers
+- 💾 Persistent virtual filesystem via `localStorage`
+
+Run locally:
+
+```bash
+cd web
+python3 -m http.server 8000
+# open http://localhost:8000
+```
 
 📥 Installation
 
